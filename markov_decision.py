@@ -6,8 +6,6 @@
 
     A Discrete Transition matrix is defined for selecting the action states: increasing, decreasing, no change
 
-
-
 """
 
 import numpy as np
@@ -49,7 +47,7 @@ class DiscreteMarkov:
         agent_emote_state = curr_state[-2]['inference']['agent_emote_state']
         dialog_emote_intensity = curr_state.data[['dialog_emotes']]
 
-        # 2. Calculate the reward agent_emote_state (predicted from dialogue) vs. dialog_emote_intensity (how volatile the users time series dataset)
+        # 2. [Temporary] Calculate the reward agent_emote_state (predicted from dialogue) vs. dialog_emote_intensity (how volatile the intensity expressed within the chat dialogue of both speakers - time series evaluation)
         agent_reward = np.max(agent_emote_state, np.mean(dialog_emote_intensity))
 
         # 3. Fetch the parameter's next action
@@ -70,7 +68,7 @@ class Markov(Trial):
             self.action[param] = DiscreteMarkov(num_action=3, action_labels=self.action_labels)
 
     def run(self, state):
-        """ Main and returns the Decoding Params. """
+        """ Main and returns the Decoding Params. TODO: make this code more simply omg """
 
         for param, next_action in self.action.items():
             # fetches next action given state
